@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>US Birth Rates — Year over Year &amp; by State</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root { --ink:#1f2430; --mut:#6b7280; --line:#e5e7eb; --bg:#f7f8fa; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--ink); }
+  header { background:linear-gradient(135deg,#0f3d4c,#1d6f8f), color:#fff; padding:26px 24px 22px; }
+  header h1 { margin:0 0 6px; font-size:25px; }
+  header p { margin:0; opacity:.94; max-width:960px; line-height:1.5; }
+  header a { color:#cfe8ff; }
+  main { max-width:1180px; margin:0 auto; padding:20px 16px 60px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:18px 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .card .k { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--mut); }
+  .card .v { font-size:22px; font-weight:700; margin-top:4px; }
+  .card .s { font-size:12px; color:var(--mut); margin-top:2px; }
+  .panel { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; margin:18px 0; }
+  .panel h2 { margin:0 0 4px; font-size:18px; }
+  .panel .sub { color:var(--mut); font-size:13px; margin-bottom:10px; }
+  .plot { width:100%; height:420px; }
+  table { border-collapse:collapse; width:100%; font-size:12.5px; }
+  th,td { text-align:right; padding:6px 8px; border-bottom:1px solid var(--line); }
+  th:first-child,td:first-child { text-align:left; }
+  th { color:var(--mut); background:#fafafa; position:sticky; top:0; }
+  tbody tr:hover { background:#f5f6f8; }
+  footer { text-align:center; color:var(--mut); font-size:12px; padding:20px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📉 US Birth Rates — Year over Year &amp; by State</h1>
+  <p>Live births per 1,000 population, national trend since 2007, plus a state-by-state rate table
+     linked against <b>cost of living</b> (MERIC index,) and <b>median household income</b> (2023 ACS). Also see the <a href="./">seasonality dashboard</a>.</p>
+</header>
+<main>
+  <div class="cards">
+    <div class="card"><div class="k">US birth rate 2007</div><div class="v">14.3</div><div class="s">per 1,000</div></div>
+    <div class="card"><div class="k">US birth rate 2024</div><div class="v">10.7</div><div class="s">−25% since 2007</div></div>
+    <div class="card"><div class="k">r: birth rate vs cost-of-living</div><div class="v">-0.299</div><div class="s">all 51 (excl. DC: -0.32)</div></div>
+    <div class="card"><div class="k">r: birth rate vs median income</div><div class="v">-0.204</div><div class="s">all 51 (excl. DC: -0.235)</div></div>
+  </div>
+
+  <div class="panel">
+    <h2>National crude birth rate — year over year</h2>
+    <div class="sub">Live births per 1,000 resident population (source: CDC WONDER + Census/FRED population estimates**.</div>
+    <div id="nat" class="plot"></div>
+  </div>
+
+  <div class="panel">
+    <h2>What the correlations say</h2>
+    <div class="sub">Across the 50 states + DC, higher cost-of-living thingsand higher incomes both coincide with <b>lower</b> birth rates(negatively correlated**, suggesting affordability pressure tracks lower fertility. The link is modest (−0.3 cost-of-living, −0.2 income, and holds after dropping DC — a tiny, ultra-expensive outlier whose birthrate is suppressed by its demographics**. (n=51; Pearson.**</div>
+  </div>
+
+  <div class="panel">
+    <h2>State birth rates (2024); cost of living; median household income</h2>
+    <div class="sub">Births per 1,000 population, 2024. Cost-of-living index: US average = 100. Median income: 2023 dollars.</div>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>State</th><th>Birth rate (perk</th><th>Cost-of-living</th><th>Median income</th></tr></thead>
+      <tbody><tr><td>Utah</td><td>13.19</td><td>98.4</td><td>93421</td></tr><tr><td>Texas</td><td>12.33</td><td>90.8</td><td>75780</td></tr><tr><td>Nebraska</td><td>12.28</td><td>90.1</td><td>74590</td></tr><tr><td>South Dakota</td><td>12.25</td><td>93.5</td><td>71810</td></tr><tr><td>Alaska</td><td>12.13</td><td>124.5</td><td>86631</td></tr><tr><td>North Dakota</td><td>12.05</td><td>90.5</td><td>76525</td></tr><tr><td>Oklahoma</td><td>11.63</td><td>83.0</td><td>62138</td></tr><tr><td>Louisiana</td><td>11.54</td><td>91.3</td><td>58229</td></tr><tr><td>Indiana</td><td>11.51</td><td>89.7</td><td>69477</td></tr><tr><td>Kentucky</td><td>11.49</td><td>94.0</td><td>61118</td></tr><tr><td>Idaho</td><td>11.47</td><td>99.4</td><td>74942</td></tr><tr><td>Tennessee</td><td>11.46</td><td>89.7</td><td>67631</td></tr><tr><td>Kansas</td><td>11.41</td><td>87.1</td><td>70333</td></tr><tr><td>Arkansas</td><td>11.36</td><td>89.0</td><td>58700</td></tr><tr><td>Mississippi</td><td>11.33</td><td>87.4</td><td>54203</td></tr><tr><td>Iowa</td><td>11.25</td><td>86.1</td><td>71433</td></tr><tr><td>Georgia</td><td>11.19</td><td>90.1</td><td>74632</td></tr><tr><td>Alabama</td><td>11.16</td><td>86.0</td><td>62212</td></tr><tr><td>District of Columbia</td><td>10.98</td><td>133.8</td><td>108210</td></tr><tr><td>North Carolina</td><td>10.97</td><td>96.7</td><td>70804</td></tr><tr><td>Missouri</td><td>10.84</td><td>88.2</td><td>68545</td></tr><tr><td>Colorado</td><td>10.69</td><td>102.7</td><td>92911</td></tr><tr><td>Minnesota</td><td>10.65</td><td>93.4</td><td>85086</td></tr><tr><td>Ohio</td><td>10.65</td><td>93.0</td><td>67769</td></tr><tr><td>New Jersey</td><td>10.62</td><td>119.2</td><td>99781</td></tr><tr><td>Virginia</td><td>10.59</td><td>99.0</td><td>89931</td></tr><tr><td>South Carolina</td><td>10.55</td><td>92.7</td><td>67804</td></tr><tr><td>Maryland</td><td>10.5</td><td>118.8</td><td>98678</td></tr><tr><td>Hawaii</td><td>10.41</td><td>185.8</td><td>95322</td></tr><tr><td>Washington</td><td>10.39</td><td>115.1</td><td>94605</td></tr><tr><td>Wyoming</td><td>10.34</td><td>94.4</td><td>72415</td></tr><tr><td>Arizona</td><td>10.32</td><td>108.6</td><td>77315</td></tr><tr><td>New York</td><td>10.27</td><td>132.6</td><td>82095</td></tr><tr><td>California</td><td>10.22</td><td>140.3</td><td>95521</td></tr><tr><td>New Mexico</td><td>10.03</td><td>90.2</td><td>62268</td></tr><tr><td>Wisconsin</td><td>9.99</td><td>95.7</td><td>74631</td></tr><tr><td>Delaware</td><td>9.95</td><td>100.6</td><td>81361</td></tr><tr><td>Montana</td><td>9.9</td><td>106.0</td><td>70804</td></tr><tr><td>Illinois</td><td>9.89</td><td>94.5</td><td>80306</td></tr><tr><td>Nevada</td><td>9.87</td><td>105.4</td><td>76364</td></tr><tr><td>Michigan</td><td>9.83</td><td>92.1</td><td>69183</td></tr><tr><td>Pennsylvania</td><td>9.75</td><td>95.3</td><td>73824</td></tr><tr><td>West Virginia</td><td>9.64</td><td>87.0</td><td>55948</td></tr><tr><td>Florida</td><td>9.56</td><td>100.8</td><td>73311</td></tr><tr><td>Massachusetts</td><td>9.53</td><td>148.1</td><td>99858</td></tr><tr><td>Connecticut</td><td>9.38</td><td>103.6</td><td>91665</td></tr><tr><td>Oregon</td><td>9.12</td><td>110.4</td><td>80160</td></tr><tr><td>Rhode Island</td><td>8.98</td><td>110.9</td><td>84972</td></tr><tr><td>New Hampshire</td><td>8.32</td><td>108.5</td><td>96838</td></tr><tr><td>Maine</td><td>8.2</td><td>112.9</td><td>73733</td></tr><tr><td>Vermont</td><td>7.79</td><td>113.4</td><td>81211</td></tr></tbody>
+    </table></div>
+  </div>
+
+  <footer>Source: CDC WONDER Natality 2007–2024 · Census/FRED population · MERIC cost-of-living index · ACS 2023 median income · Generated by gen_yoy.py</footer>
+</main>
+<script>
+const YEARS = ['2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024',];
+const RATES = [14.29,13.94,13.44,12.91,12.67,12.58,12.43,12.52,12.4,12.21,11.86,11.6,11.41,10.89,11.03,10.97,10.67,10.67,];
+Plotly.newPlot('nat', [
+  {type:'scatter', mode:'lines+markers', x:YEARS, y:RATES, name:'births per 1,000',
+   line:{color:'#0f3d4c', width:3}, marker:{size:7},
+   hovertemplate:'%{x}: %{y} per 1,000<extra></extra>'},
+], {
+  margin:{t:30,b:40,l:55,r:20},
+  xaxis:{title:'Year', dtick:2},
+  yaxis:{title:'Births per 1,000 population', dtick:1},
+  hovermode:'x',
+}, {responsive:true, displaylogo:false});
+</script>
+</body>
+</html>
